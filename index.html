@@ -32,11 +32,12 @@
                 0 25px 50px rgba(0, 0, 0, 0.25),
                 0 0 0 1px rgba(255, 255, 255, 0.05),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            max-width: 500px;
+            max-width: 900px;
             width: 100%;
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-bottom: 100px;
         }
 
         .container::before {
@@ -112,7 +113,47 @@
         .buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 25px;
+        }
+
+        .button-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            padding: 10px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .button-wrapper:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(100, 255, 218, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .descriptor-bubble {
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            color: #64ffda;
+            font-size: 0.95em;
+            line-height: 1.4;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(100, 255, 218, 0.1);
+            flex: 1;
+            min-width: 250px;
+            text-align: left;
+        }
+
+        .descriptor-bubble strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #ffffff;
+            font-size: 1.05em;
         }
 
         .mailto-btn {
@@ -135,6 +176,8 @@
                 0 8px 32px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2),
                 0 0 0 1px rgba(255, 255, 255, 0.05);
+            min-width: 280px;
+            white-space: nowrap;
         }
 
         .mailto-btn:before {
@@ -245,6 +288,211 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal {
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: #e0e6ed;
+        }
+
+        .modal h3 {
+            color: #64ffda;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .modal-content {
+            margin-bottom: 25px;
+        }
+
+        .case-input-group {
+            margin-bottom: 20px;
+        }
+
+        .case-input-group label {
+            display: block;
+            color: #e0e6ed;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .case-input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e6ed;
+            backdrop-filter: blur(10px);
+        }
+
+        .radio-group {
+            margin-bottom: 20px;
+        }
+
+        .radio-group h4 {
+            color: #e0e6ed;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #64ffda;
+        }
+
+        .radio-option input[type="radio"],
+        .radio-option input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .radio-option label {
+            color: #e0e6ed;
+            font-size: 1em;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #00e676 0%, #00c853 50%, #1de9b6 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #00e676 0%, #00c853 30%, #1de9b6 100%);
+        }
+
+        .modal-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e6ed;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Footer Disclaimer Styles */
+        .footer-disclaimer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(139, 69, 19, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 165, 0, 0.3);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .disclaimer-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .disclaimer-icon {
+            width: 24px;
+            height: 24px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .disclaimer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .disclaimer-title {
+            color: #ffa500;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .disclaimer-text {
+            color: #ffcc80;
+            font-size: 0.8em;
+            line-height: 1.2;
+        }
+
+        .disclaimer-right {
+            color: #b0bec5;
+            font-size: 0.8em;
+            text-align: right;
+        }
+
         .top-header {
             position: fixed;
             top: 0;
@@ -295,6 +543,65 @@
             padding-top: 80px;
         }
 
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 30px 20px;
+                margin: 10px;
+                margin-bottom: 120px;
+            }
+
+            .button-wrapper {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .mailto-btn {
+                min-width: auto;
+                width: 100%;
+                padding: 18px 24px;
+                font-size: 1em;
+                white-space: normal;
+                text-align: center;
+            }
+
+            .descriptor-bubble {
+                min-width: auto;
+                text-align: center;
+                width: 100%;
+            }
+
+            .disclaimer-left {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+
+            .disclaimer-content {
+                gap: 1px;
+            }
+
+            .disclaimer-title {
+                font-size: 0.8em;
+            }
+
+            .disclaimer-text {
+                font-size: 0.75em;
+            }
+
+            .disclaimer-right {
+                font-size: 0.75em;
+                text-align: left;
+            }
+
+            .footer-disclaimer {
+                padding: 10px 15px;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
         @media (max-width: 600px) {
             .top-header {
                 padding: 10px 15px;
@@ -320,21 +627,11 @@
 
             body {
                 padding-top: 100px;
-            }
-
-            .container {
-                padding: 25px;
-                margin: 10px;
-                border-radius: 20px;
+                padding-bottom: 100px;
             }
 
             .header h1 {
                 font-size: 1.8em;
-            }
-
-            .mailto-btn {
-                padding: 18px 24px;
-                font-size: 1em;
             }
 
             .btn-icon {
@@ -365,20 +662,38 @@
         </div>
 
         <div class="buttons-container">
-            <button class="mailto-btn btn-note" onclick="createMailto('note')">
-                <span class="btn-icon">📝</span>
-                Add Note
-            </button>
+            <div class="button-wrapper">
+                <button class="mailto-btn btn-note" onclick="createMailto('note')">
+                    <span class="btn-icon">📝</span>
+                    Add Note (and attachments if applicable)
+                </button>
+                <div class="descriptor-bubble">
+                    <strong>Simple Note Addition</strong>
+                    Sends to: Decisiv Case Update only
+                </div>
+            </div>
 
-            <button class="mailto-btn btn-attachment" onclick="createMailto('attachment')">
-                <span class="btn-icon">📎</span>
-                Add Note with Attachments
-            </button>
+            <div class="button-wrapper">
+                <button class="mailto-btn btn-attachment" onclick="createMailto('notify')">
+                    <span class="btn-icon">📎</span>
+                    Add Note and Notify
+                </button>
+                <div class="descriptor-bubble">
+                    <strong>Note with Team Notification</strong>
+                    Sends to: Decisiv Case Update + Back Parts Counter or Service Admin Team
+                </div>
+            </div>
 
-            <button class="mailto-btn btn-status" onclick="createMailto('status')">
-                <span class="btn-icon">🔄</span>
-                Add Note & Change Case Status
-            </button>
+            <div class="button-wrapper">
+                <button class="mailto-btn btn-status" onclick="createMailto('status')">
+                    <span class="btn-icon">🔧</span>
+                    Service Diag and Parts Update
+                </button>
+                <div class="descriptor-bubble">
+                    <strong>Service Diagnosis Report</strong>
+                    Sends to: Decisiv Case Update + Back Parts Counter
+                </div>
+            </div>
         </div>
 
         <div class="error-message" id="errorMessage">
@@ -386,9 +701,60 @@
         </div>
     </div>
 
+    <!-- Footer Disclaimer -->
+    <div class="footer-disclaimer">
+        <div class="disclaimer-left">
+            <div class="disclaimer-icon">!</div>
+            <div class="disclaimer-content">
+                <div class="disclaimer-title">WKI Proprietary Application</div>
+                <div class="disclaimer-text">This application is proprietary to WKI and contains confidential business information. Unauthorized access, use, or distribution is strictly prohibited.</div>
+            </div>
+        </div>
+        <div class="disclaimer-right">
+            Built for WKI Service Department Excellence<br>
+            Email Communication Tool • Professional Case Management • WKI Internal Use Only
+        </div>
+    </div>
+
+    <!-- Email Notification Modal -->
+    <div class="modal-overlay" id="notificationModal">
+        <div class="modal">
+            <h3>Add Note and Notify</h3>
+            <div class="modal-content">
+                <div class="case-input-group">
+                    <label for="modalCaseNumber">Case Number:</label>
+                    <input type="text" id="modalCaseNumber" placeholder="Enter case number">
+                </div>
+                
+                <div class="radio-group">
+                    <h4>Select who to notify (check all that apply):</h4>
+                    <div class="radio-option">
+                        <input type="checkbox" id="backPartsCounter" name="notifyEmail" value="WIC-BPC@WichitaKenworth.com">
+                        <label for="backPartsCounter">Back Parts Counter</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="checkbox" id="serviceAdminTeam" name="notifyEmail" value="WichitaServiceAdmin@WichitaKenworth.com">
+                        <label for="serviceAdminTeam">Service Admin Team</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-primary" onclick="processNotificationEmail()">Send Email</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function createMailto(type) {
-            // Prompt for case number
+            if (type === 'notify') {
+                // Show the notification modal for the second option
+                document.getElementById('notificationModal').style.display = 'flex';
+                return;
+            }
+            
+            // For other options, prompt for case number
             const caseNumber = prompt("Enter the Decisiv Case Number:", "");
             
             // Validate case number
@@ -407,54 +773,123 @@
                 return;
             }
             
+            // Process the email based on type
+            processEmail(type, cleanCaseNumber, null);
+        }
+
+        function processNotificationEmail() {
+            const caseNumber = document.getElementById('modalCaseNumber').value;
+            const selectedEmails = document.querySelectorAll('input[name="notifyEmail"]:checked');
+            
+            if (!caseNumber) {
+                alert('Please enter a case number.');
+                return;
+            }
+            
+            if (selectedEmails.length === 0) {
+                alert('Please select at least one recipient to notify.');
+                return;
+            }
+            
+            // Remove any non-numeric characters and validate
+            const cleanCaseNumber = caseNumber.replace(/\D/g, '');
+            
+            if (!cleanCaseNumber) {
+                alert('Please enter a valid case number (numbers only).');
+                return;
+            }
+            
+            // Get selected email addresses
+            const selectedEmailAddresses = Array.from(selectedEmails).map(checkbox => checkbox.value);
+            
+            // Close modal
+            closeModal();
+            
+            // Process the email
+            processEmail('notify', cleanCaseNumber, selectedEmailAddresses);
+        }
+
+        function closeModal() {
+            document.getElementById('notificationModal').style.display = 'none';
+            // Clear form
+            document.getElementById('modalCaseNumber').value = '';
+            const checkboxes = document.querySelectorAll('input[name="notifyEmail"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+        }
+
+        function processEmail(type, caseNumber, ccEmails) {
             // Email details
             const toEmail = 'Cases@replies.decisivapps.com';
-            const subject = cleanCaseNumber;
+            const subject = caseNumber;
+            let ccList = [];
+            
+            // For 'notify' type, add selected emails to CC
+            if (type === 'notify' && ccEmails && ccEmails.length > 0) {
+                ccList = ccList.concat(ccEmails);
+            }
+            
+            // For 'status' type, add BPC to CC
+            if (type === 'status') {
+                ccList.push('BPC@WichitaKenworth.com');
+            }
             
             // Create email body based on type
             let emailBody = '';
             
             switch(type) {
                 case 'note':
-                    emailBody = `Adding a new notation to Case #${cleanCaseNumber}
+                    emailBody = `Adding a new notation to Case #${caseNumber}
 
 Adding the following note to this case:
 
-[Enter your note here]
+[Enter your note below and delete this line] Note: Attaching any files or images to this email will add them to the case.
 
 ---
 This email was generated by the Decisiv Case Notation Tool`;
                     break;
                     
-                case 'attachment':
-                    emailBody = `Adding a new notation with attachments to Case #${cleanCaseNumber}
+                case 'notify':
+                    emailBody = `Adding a new notation with attachments to Case # ${caseNumber}
 
 Adding the following note and attached files to this case:
 
-Note: [Enter your note here]
+Note: 
 
-Attachments: [Attach files to this email]
+Attachments: [Attach any relevant files or images to this email]
 
 ---
 This email was generated by the Decisiv Case Notation Tool`;
                     break;
                     
                 case 'status':
-                    emailBody = `Adding a notation and updating case status for Case #${cleanCaseNumber}
+                    emailBody = `Service Diagnosis and Parts Update for Case #${caseNumber}
 
-Adding the following note and updating the case status:
+1. Diagnosis and Findings - 
+[Enter your diagnosis and findings here]
 
-Note: [Enter your note here]
+2. Parts list - 
+   a. [Part name/number - description]
+   b. [Part name/number - description]
+   c. [Part name/number - description]
+   d. [Part name/number - description]
 
-New Status: [Specify new status - e.g., In Progress, Resolved, Pending, etc.]
+3. Additional Notes - 
+[Enter any additional notes or observations here]
 
 ---
 This email was generated by the Decisiv Case Notation Tool`;
                     break;
             }
             
-            // Create mailto URL
-            const mailtoUrl = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            // Create mailto URL with CC
+            let mailtoUrl = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}`;
+            
+            if (ccList.length > 0) {
+                const ccString = ccList.join(',');
+                mailtoUrl += `&cc=${encodeURIComponent(ccString)}`;
+            }
+            
+            mailtoUrl += `&body=${encodeURIComponent(emailBody)}`;
             
             // Open email client
             window.location.href = mailtoUrl;
@@ -463,6 +898,13 @@ This email was generated by the Decisiv Case Notation Tool`;
         // Hide error message on page load
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('errorMessage').style.display = 'none';
+            
+            // Close modal when clicking outside of it
+            document.getElementById('notificationModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>
