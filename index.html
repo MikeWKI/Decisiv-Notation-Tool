@@ -638,6 +638,107 @@
                 font-size: 1.2em;
             }
         }
+
+        /* Location Selection Styles */
+        .location-selection {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(15, 15, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .location-selection h3 {
+            color: #00e676;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .location-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .location-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .location-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 230, 118, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .location-option input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            accent-color: #00e676;
+            cursor: pointer;
+        }
+
+        .location-option label {
+            color: #e0e6ed;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .location-option.selected {
+            background: rgba(0, 230, 118, 0.15);
+            border-color: #00e676;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
+        }
+
+        .location-option.selected label {
+            color: #00e676;
+        }
+
+        .location-status {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: #b0bec5;
+            font-size: 0.9em;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .location-options {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .location-selection {
+                padding: 20px 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -659,6 +760,32 @@
         <div class="header">
             <h1>Decisiv Case Notation Tool</h1>
             <p>Click a button below to create email notations for Decisiv cases. You'll be prompted to enter the case number.</p>
+        </div>
+
+        <!-- Location Selection -->
+        <div class="location-selection">
+            <h3>Select Your Location</h3>
+            <div class="location-status" id="locationStatus" style="display: none;">
+                <span class="loading-spinner">🔄</span> Detecting your location...
+            </div>
+            <div class="location-options">
+                <div class="location-option" onclick="selectLocation('wichita')">
+                    <input type="radio" id="location-wichita" name="location" value="wichita" checked onchange="updateLocationEmails()">
+                    <label for="location-wichita">Wichita</label>
+                </div>
+                <div class="location-option" onclick="selectLocation('dodge-city')">
+                    <input type="radio" id="location-dodge-city" name="location" value="dodge-city" onchange="updateLocationEmails()">
+                    <label for="location-dodge-city">Dodge City</label>
+                </div>
+                <div class="location-option" onclick="selectLocation('liberal')">
+                    <input type="radio" id="location-liberal" name="location" value="liberal" onchange="updateLocationEmails()">
+                    <label for="location-liberal">Liberal</label>
+                </div>
+                <div class="location-option" onclick="selectLocation('emporia')">
+                    <input type="radio" id="location-emporia" name="location" value="emporia" onchange="updateLocationEmails()">
+                    <label for="location-emporia">Emporia</label>
+                </div>
+            </div>
         </div>
 
         <div class="buttons-container">
@@ -747,6 +874,207 @@
     </div>
 
     <script>
+        // Location-specific email configuration
+        const locationConfig = {
+            'wichita': {
+                bpc: 'WIC-BPC@WichitaKenworth.com',
+                serviceAdmin: 'WichitaServiceAdmin@WichitaKenworth.com',
+                coords: { lat: 37.6872, lng: -97.3301 }, // Wichita, KS
+                city: 'Wichita',
+                state: 'KS'
+            },
+            'dodge-city': {
+                bpc: 'DOD-BPC@DodgeCityKenworth.com',
+                serviceAdmin: 'DCServiceAdmin@DodgeCityKenworth.com',
+                coords: { lat: 37.7528, lng: -100.0171 }, // Dodge City, KS
+                city: 'Dodge City',
+                state: 'KS'
+            },
+            'liberal': {
+                bpc: 'LIB-BPC@LiberalKenworth.com',
+                serviceAdmin: 'LiberalServiceAdmin@WichitaKenworth.com',
+                coords: { lat: 37.0431, lng: -100.9210 }, // Liberal, KS
+                city: 'Liberal',
+                state: 'KS'
+            },
+            'emporia': {
+                bpc: 'Parts@EmporiaKenworth.com',
+                serviceAdmin: 'EmporiaServiceAdmin@WichitaKenworth.com',
+                coords: { lat: 38.4039, lng: -96.1817 }, // Emporia, KS
+                city: 'Emporia',
+                state: 'KS'
+            }
+        };
+
+        // Calculate distance between two coordinates (Haversine formula)
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            const R = 3959; // Earth's radius in miles
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLng/2) * Math.sin(dLng/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Find closest location based on coordinates
+        function findClosestLocation(userLat, userLng) {
+            let closestLocation = 'wichita';
+            let shortestDistance = Infinity;
+
+            for (const [locationKey, locationData] of Object.entries(locationConfig)) {
+                const distance = calculateDistance(
+                    userLat, userLng,
+                    locationData.coords.lat, locationData.coords.lng
+                );
+                
+                if (distance < shortestDistance) {
+                    shortestDistance = distance;
+                    closestLocation = locationKey;
+                }
+            }
+
+            return { location: closestLocation, distance: shortestDistance };
+        }
+
+        // Attempt to detect location using HTML5 Geolocation
+        function detectLocationByGeolocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error('Geolocation not supported'));
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        const result = findClosestLocation(latitude, longitude);
+                        console.log(`Geolocation detected: ${latitude}, ${longitude}`);
+                        console.log(`Closest location: ${result.location} (${result.distance.toFixed(1)} miles away)`);
+                        resolve(result.location);
+                    },
+                    (error) => {
+                        console.log('Geolocation error:', error.message);
+                        reject(error);
+                    },
+                    { 
+                        timeout: 10000, 
+                        enableHighAccuracy: true, 
+                        maximumAge: 300000 // 5 minutes cache
+                    }
+                );
+            });
+        }
+
+        // Attempt to detect location using IP-based geolocation (fallback)
+        async function detectLocationByIP() {
+            try {
+                // Using ipapi.co - free tier allows 1000 requests/day
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                if (data.latitude && data.longitude) {
+                    const result = findClosestLocation(data.latitude, data.longitude);
+                    console.log(`IP geolocation detected: ${data.city}, ${data.region} (${data.latitude}, ${data.longitude})`);
+                    console.log(`Closest location: ${result.location} (${result.distance.toFixed(1)} miles away)`);
+                    return result.location;
+                }
+                
+                // Fallback: try to match by city/state if coordinates aren't available
+                if (data.city && data.region_code) {
+                    const cityState = `${data.city.toLowerCase()}, ${data.region_code.toLowerCase()}`;
+                    console.log(`Attempting city/state match for: ${cityState}`);
+                    
+                    for (const [locationKey, locationData] of Object.entries(locationConfig)) {
+                        const locationCityState = `${locationData.city.toLowerCase()}, ${locationData.state.toLowerCase()}`;
+                        if (cityState.includes(locationData.city.toLowerCase()) && 
+                            data.region_code.toLowerCase() === locationData.state.toLowerCase()) {
+                            console.log(`Matched by city/state: ${locationKey}`);
+                            return locationKey;
+                        }
+                    }
+                }
+                
+                throw new Error('Could not determine location from IP data');
+            } catch (error) {
+                console.log('IP geolocation error:', error.message);
+                throw error;
+            }
+        }
+
+        // Main auto-detection function
+        async function autoDetectLocation() {
+            console.log('Starting automatic location detection...');
+            
+            try {
+                // First try HTML5 geolocation (most accurate)
+                const location = await detectLocationByGeolocation();
+                console.log(`Auto-detected location via geolocation: ${location}`);
+                return location;
+            } catch (geolocationError) {
+                console.log('Geolocation failed, trying IP-based detection...');
+                
+                try {
+                    // Fallback to IP-based geolocation
+                    const location = await detectLocationByIP();
+                    console.log(`Auto-detected location via IP: ${location}`);
+                    return location;
+                } catch (ipError) {
+                    console.log('All location detection methods failed, using default (Wichita)');
+                    return 'wichita'; // Default fallback
+                }
+            }
+        }
+
+        // Get current selected location
+        function getSelectedLocation() {
+            const selectedRadio = document.querySelector('input[name="location"]:checked');
+            return selectedRadio ? selectedRadio.value : 'wichita'; // Default to Wichita
+        }
+
+        // Select location and update UI
+        function selectLocation(locationValue) {
+            // Update radio button
+            const radioButton = document.getElementById(`location-${locationValue}`);
+            if (radioButton) {
+                radioButton.checked = true;
+            }
+            
+            // Update visual selection
+            document.querySelectorAll('.location-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            const selectedOption = document.querySelector(`input[value="${locationValue}"]`).closest('.location-option');
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            // Update email addresses
+            updateLocationEmails();
+        }
+
+        // Update email addresses in modal based on selected location
+        function updateLocationEmails() {
+            const selectedLocation = getSelectedLocation();
+            const config = locationConfig[selectedLocation];
+            
+            if (config) {
+                // Update BPC email
+                const bpcCheckbox = document.getElementById('backPartsCounter');
+                if (bpcCheckbox) {
+                    bpcCheckbox.value = config.bpc;
+                }
+                
+                // Update Service Admin email
+                const serviceAdminCheckbox = document.getElementById('serviceAdminTeam');
+                if (serviceAdminCheckbox) {
+                    serviceAdminCheckbox.value = config.serviceAdmin;
+                }
+            }
+        }
+
         function createMailto(type) {
             if (type === 'notify') {
                 // Show the notification modal for the second option
@@ -830,7 +1158,9 @@
             
             // For 'status' type, add BPC to CC
             if (type === 'status') {
-                ccList.push('BPC@WichitaKenworth.com');
+                const selectedLocation = getSelectedLocation();
+                const config = locationConfig[selectedLocation];
+                ccList.push(config.bpc);
             }
             
             // Create email body based on type
@@ -899,6 +1229,9 @@ This email was generated by the Decisiv Case Notation Tool`;
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('errorMessage').style.display = 'none';
             
+            // Initialize location selection with auto-detection
+            initializeLocationSelection();
+            
             // Close modal when clicking outside of it
             document.getElementById('notificationModal').addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -906,6 +1239,79 @@ This email was generated by the Decisiv Case Notation Tool`;
                 }
             });
         });
+
+        // Initialize location selection with auto-detection
+        async function initializeLocationSelection() {
+            // Show loading indicator
+            const statusElement = document.getElementById('locationStatus');
+            statusElement.style.display = 'block';
+            console.log('Initializing location detection...');
+            
+            try {
+                const detectedLocation = await autoDetectLocation();
+                selectLocation(detectedLocation);
+                
+                // Hide loading indicator
+                statusElement.style.display = 'none';
+                
+                // Show a subtle notification about auto-detection
+                showLocationNotification(detectedLocation);
+            } catch (error) {
+                console.error('Location detection failed:', error);
+                
+                // Hide loading indicator
+                statusElement.style.display = 'none';
+                
+                // Fall back to default (Wichita)
+                selectLocation('wichita');
+            }
+        }
+
+        // Show a subtle notification about auto-detected location
+        function showLocationNotification(location) {
+            const locationName = locationConfig[location]?.city || location;
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.innerHTML = `📍 Auto-detected location: <strong>${locationName}</strong> (you can change this above)`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: rgba(0, 230, 118, 0.9);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 12px;
+                font-size: 0.9em;
+                font-weight: 500;
+                box-shadow: 0 4px 20px rgba(0, 230, 118, 0.3);
+                backdrop-filter: blur(10px);
+                z-index: 1500;
+                opacity: 0;
+                transition: all 0.3s ease;
+                max-width: 300px;
+                line-height: 1.4;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
     </script>
 </body>
 </html>
