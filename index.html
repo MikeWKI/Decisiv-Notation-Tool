@@ -16,10 +16,24 @@
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 20px;
             color: #e0e6ed;
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        .sidebar {
+            flex: 0 0 320px;
+            position: sticky;
+            top: 100px;
         }
 
         .container {
@@ -27,7 +41,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 40px;
+            padding: 30px 40px 40px 40px;
             box-shadow: 
                 0 25px 50px rgba(0, 0, 0, 0.25),
                 0 0 0 1px rgba(255, 255, 255, 0.05),
@@ -38,6 +52,7 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 100px;
+            flex: 1;
         }
 
         .container::before {
@@ -50,26 +65,11 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
-        .header {
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #ffffff;
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #64ffda, #00bcd4, #2196f3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
-        }
-
-        .header p {
+        .intro-text {
             color: #b0bec5;
             font-size: 1.1em;
             line-height: 1.5;
+            margin-bottom: 30px;
         }
 
         .form-group {
@@ -432,6 +432,205 @@
             transform: translateY(-2px);
         }
 
+        /* User Guide Modal Styles */
+        .user-guide-modal {
+            background: rgba(15, 15, 35, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 0;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 1000px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: #e0e6ed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-guide-header {
+            background: linear-gradient(135deg, #00e676 0%, #00c853 50%, #1de9b6 100%);
+            padding: 20px 30px;
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-guide-header h2 {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .close-guide-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-guide-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .user-guide-content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .user-guide-content h1 {
+            color: #00e676;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 230, 118, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .user-guide-content h2 {
+            color: #64ffda;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        .user-guide-content h3 {
+            color: #b0bec5;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .user-guide-content h4 {
+            color: #e0e6ed;
+            font-size: 1.1em;
+            margin: 15px 0 8px 0;
+        }
+
+        .user-guide-content p {
+            margin-bottom: 15px;
+            color: #b0bec5;
+        }
+
+        .user-guide-content ul, .user-guide-content ol {
+            margin: 15px 0 15px 20px;
+            color: #b0bec5;
+        }
+
+        .user-guide-content li {
+            margin-bottom: 8px;
+        }
+
+        .user-guide-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .user-guide-content th {
+            background: rgba(0, 230, 118, 0.2);
+            color: #00e676;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .user-guide-content td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0bec5;
+        }
+
+        .user-guide-content code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #64ffda;
+        }
+
+        .user-guide-content pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #00e676;
+        }
+
+        .user-guide-content blockquote {
+            border-left: 4px solid #64ffda;
+            padding-left: 15px;
+            margin: 15px 0;
+            color: #64ffda;
+            font-style: italic;
+        }
+
+        /* Help Button Styles */
+        .help-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 50%, #00bcd4 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(33, 150, 243, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .user-guide-modal {
+                width: 95vw;
+                max-height: 85vh;
+            }
+            
+            .user-guide-header {
+                padding: 15px 20px;
+            }
+            
+            .user-guide-content {
+                padding: 20px;
+            }
+            
+            .help-button {
+                bottom: 85px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3em;
+            }
+        }
+
         /* Footer Disclaimer Styles */
         .footer-disclaimer {
             position: fixed;
@@ -513,6 +712,27 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 2;
+        }
+
+        .header-center h1 {
+            color: #ffffff;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(45deg, #64ffda, #00bcd4, #2196f3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+            text-align: center;
         }
 
         .kenworth-logo {
@@ -531,6 +751,8 @@
         .header-right {
             display: flex;
             align-items: center;
+            justify-content: flex-end;
+            flex: 1;
         }
 
         .decisiv-logo {
@@ -544,10 +766,21 @@
         }
 
         @media (max-width: 768px) {
+            .main-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .sidebar {
+                flex: none;
+                position: static;
+                width: 100%;
+            }
+
             .container {
                 max-width: 100%;
-                padding: 30px 20px;
-                margin: 10px;
+                padding: 20px;
+                margin: 0;
                 margin-bottom: 120px;
             }
 
@@ -600,17 +833,38 @@
                 flex-direction: column;
                 gap: 8px;
             }
+
+            .header-center h1 {
+                font-size: 1.6em;
+            }
+
+            .location-options {
+                gap: 10px;
+            }
         }
 
         @media (max-width: 600px) {
             .top-header {
                 padding: 10px 15px;
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
 
             .header-left {
                 gap: 10px;
+                justify-content: center;
+            }
+
+            .header-center {
+                order: -1;
+            }
+
+            .header-center h1 {
+                font-size: 1.4em;
+            }
+
+            .header-right {
+                justify-content: center;
             }
 
             .service-dept-text {
@@ -626,12 +880,8 @@
             }
 
             body {
-                padding-top: 100px;
+                padding-top: 120px;
                 padding-bottom: 100px;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
             }
 
             .btn-icon {
@@ -641,12 +891,16 @@
 
         /* Location Selection Styles */
         .location-selection {
-            margin-bottom: 30px;
             padding: 25px;
-            background: rgba(15, 15, 35, 0.6);
+            background: rgba(15, 15, 35, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            width: 100%;
         }
 
         .location-selection h3 {
@@ -658,11 +912,9 @@
         }
 
         .location-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            max-width: 800px;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .location-option {
@@ -731,8 +983,7 @@
 
         @media (max-width: 768px) {
             .location-options {
-                grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 10px;
             }
             
             .location-selection {
@@ -749,6 +1000,9 @@
                  class="kenworth-logo">
             <span class="service-dept-text">WKI Service Dept.</span>
         </div>
+        <div class="header-center">
+            <h1>Decisiv Case Notation Tool</h1>
+        </div>
         <div class="header-right">
             <img src="https://www.decisiv.com/wp-content/uploads/2020/01/Decisiv-Logo-096126.svg" 
                  alt="Decisiv Logo" 
@@ -756,39 +1010,45 @@
         </div>
     </div>
     
-    <div class="container">
-        <div class="header">
-            <h1>Decisiv Case Notation Tool</h1>
-            <p>Click a button below to create email notations for Decisiv cases. You'll be prompted to enter the case number.</p>
-        </div>
-
-        <!-- Location Selection -->
-        <div class="location-selection">
-            <h3>Select Your Location</h3>
-            <div class="location-status" id="locationStatus" style="display: none;">
-                <span class="loading-spinner">🔄</span> Detecting your location...
+    <!-- Help Button -->
+    <button class="help-button" onclick="openUserGuide()" title="User Guide">
+        ❓
+    </button>
+    
+    <div class="main-layout">
+        <!-- Sidebar with Location Selection -->
+        <div class="sidebar">
+            <div class="location-selection">
+                <h3>Select Your Location</h3>
+                <div class="location-status" id="locationStatus" style="display: none;">
+                    <span class="loading-spinner">🔄</span> Detecting your location...
+                </div>
+                <div class="location-options">
+                    <div class="location-option" onclick="selectLocation('wichita')">
+                        <input type="radio" id="location-wichita" name="location" value="wichita" checked onchange="updateLocationEmails()">
+                        <label for="location-wichita">Wichita</label>
+                    </div>
+                    <div class="location-option" onclick="selectLocation('dodge-city')">
+                        <input type="radio" id="location-dodge-city" name="location" value="dodge-city" onchange="updateLocationEmails()">
+                        <label for="location-dodge-city">Dodge City</label>
+                    </div>
+                    <div class="location-option" onclick="selectLocation('liberal')">
+                        <input type="radio" id="location-liberal" name="location" value="liberal" onchange="updateLocationEmails()">
+                        <label for="location-liberal">Liberal</label>
+                    </div>
+                    <div class="location-option" onclick="selectLocation('emporia')">
+                        <input type="radio" id="location-emporia" name="location" value="emporia" onchange="updateLocationEmails()">
+                        <label for="location-emporia">Emporia</label>
+                    </div>
+                </div>
             </div>
-            <div class="location-options">
-                <div class="location-option" onclick="selectLocation('wichita')">
-                    <input type="radio" id="location-wichita" name="location" value="wichita" checked onchange="updateLocationEmails()">
-                    <label for="location-wichita">Wichita</label>
-                </div>
-                <div class="location-option" onclick="selectLocation('dodge-city')">
-                    <input type="radio" id="location-dodge-city" name="location" value="dodge-city" onchange="updateLocationEmails()">
-                    <label for="location-dodge-city">Dodge City</label>
-                </div>
-                <div class="location-option" onclick="selectLocation('liberal')">
-                    <input type="radio" id="location-liberal" name="location" value="liberal" onchange="updateLocationEmails()">
-                    <label for="location-liberal">Liberal</label>
-                </div>
-                <div class="location-option" onclick="selectLocation('emporia')">
-                    <input type="radio" id="location-emporia" name="location" value="emporia" onchange="updateLocationEmails()">
-                    <label for="location-emporia">Emporia</label>
-                </div>
-            </div>
         </div>
+        
+        <!-- Main Content Container -->
+        <div class="container">
+            <p class="intro-text">Click a button below to create email notations for Decisiv cases. You'll be prompted to enter the case number.</p>
 
-        <div class="buttons-container">
+            <div class="buttons-container">
             <div class="button-wrapper">
                 <button class="mailto-btn btn-note" onclick="createMailto('note')">
                     <span class="btn-icon">📝</span>
@@ -823,8 +1083,9 @@
             </div>
         </div>
 
-        <div class="error-message" id="errorMessage">
-            Please enter a valid case number (numbers only).
+            <div class="error-message" id="errorMessage">
+                Please enter a valid case number (numbers only).
+            </div>
         </div>
     </div>
 
@@ -867,8 +1128,21 @@
             </div>
             
             <div class="modal-buttons">
-                <button class="modal-btn modal-btn-primary" onclick="processNotificationEmail()">Send Email</button>
+                <button class="modal-btn modal-btn-primary" onclick="processNotificationEmail()">Generate Email</button>
                 <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Guide Modal -->
+    <div class="modal-overlay" id="userGuideModal">
+        <div class="user-guide-modal">
+            <div class="user-guide-header">
+                <h2>📋 Decisiv Case Notation Tool - User Guide</h2>
+                <button class="close-guide-btn" onclick="closeUserGuide()">×</button>
+            </div>
+            <div class="user-guide-content" id="userGuideContent">
+                <!-- User guide content will be populated by JavaScript -->
             </div>
         </div>
     </div>
@@ -1238,6 +1512,13 @@ This email was generated by the Decisiv Case Notation Tool`;
                     closeModal();
                 }
             });
+            
+            // Close user guide modal when clicking outside of it
+            document.getElementById('userGuideModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeUserGuide();
+                }
+            });
         });
 
         // Initialize location selection with auto-detection
@@ -1311,6 +1592,235 @@ This email was generated by the Decisiv Case Notation Tool`;
                     }
                 }, 300);
             }, 5000);
+        }
+
+        // User Guide Modal Functions
+        function openUserGuide() {
+            const modal = document.getElementById('userGuideModal');
+            const content = document.getElementById('userGuideContent');
+            
+            // Populate content
+            content.innerHTML = getUserGuideHTML();
+            
+            // Show modal
+            modal.style.display = 'flex';
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUserGuide() {
+            const modal = document.getElementById('userGuideModal');
+            modal.style.display = 'none';
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        function getUserGuideHTML() {
+            return `
+                <h2>🚀 Getting Started</h2>
+                
+                <h3>Opening the Tool</h3>
+                <ol>
+                    <li><strong>Open the Application</strong> in any modern web browser (Chrome, Firefox, Edge, Safari)</li>
+                    <li><strong>Allow location permissions</strong> when prompted for automatic location detection (optional but recommended)</li>
+                    <li>The tool will automatically detect your location and select the appropriate WKI location</li>
+                </ol>
+
+                <h2>🏢 Location Selection</h2>
+                
+                <h3>Automatic Detection</h3>
+                <p>When you first load the page, the tool will:</p>
+                <ol>
+                    <li><strong>Show a loading spinner</strong> "🔄 Detecting your location..."</li>
+                    <li><strong>Request location permission</strong> (GPS/WiFi-based detection)</li>
+                    <li><strong>Fall back to IP detection</strong> if GPS is denied</li>
+                    <li><strong>Auto-select the closest location</strong> from: Wichita, Dodge City, Liberal, Emporia</li>
+                </ol>
+
+                <h3>Manual Override</h3>
+                <ul>
+                    <li><strong>Click any location button</strong> to manually select your location</li>
+                    <li><strong>Selected location</strong> will be highlighted in green</li>
+                    <li><strong>Email addresses automatically update</strong> based on your selection</li>
+                </ul>
+
+                <h3>Location-Specific Email Routing</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>BPC Email</th>
+                            <th>Service Admin Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Wichita</strong></td>
+                            <td>WIC-BPC@WichitaKenworth.com</td>
+                            <td>WichitaServiceAdmin@WichitaKenworth.com</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dodge City</strong></td>
+                            <td>DOD-BPC@DodgeCityKenworth.com</td>
+                            <td>DCServiceAdmin@DodgeCityKenworth.com</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liberal</strong></td>
+                            <td>LIB-BPC@LiberalKenworth.com</td>
+                            <td>LiberalServiceAdmin@WichitaKenworth.com</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Emporia</strong></td>
+                            <td>Parts@EmporiaKenworth.com</td>
+                            <td>EmporiaServiceAdmin@WichitaKenworth.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>📧 Email Types & Functions</h2>
+
+                <h3>1. 📝 Add Note (and attachments if applicable)</h3>
+                <p><strong>Purpose:</strong> Simple note addition to a Decisiv case</p>
+                
+                <p><strong>How to use:</strong></p>
+                <ol>
+                    <li>Click the <strong>green "Add Note"</strong> button</li>
+                    <li>Enter the <strong>case number</strong> when prompted (numbers only)</li>
+                    <li>Your default email client opens with pre-formatted template</li>
+                </ol>
+
+                <p><strong>Email Recipients:</strong></p>
+                <ul>
+                    <li>✅ Decisiv Case Update system only</li>
+                    <li>❌ No team notifications</li>
+                </ul>
+
+                <p><strong>Use cases:</strong> Adding documentation, attaching photos/files, simple status updates</p>
+
+                <h3>2. 📎 Add Note and Notify</h3>
+                <p><strong>Purpose:</strong> Add a note AND notify your team members</p>
+                
+                <p><strong>How to use:</strong></p>
+                <ol>
+                    <li>Click the <strong>blue "Add Note and Notify"</strong> button</li>
+                    <li><strong>Modal window opens</strong> with case number input and notification options</li>
+                    <li><strong>Enter case number</strong> (numbers only)</li>
+                    <li><strong>Select recipients:</strong> Back Parts Counter and/or Service Admin Team</li>
+                    <li>Click <strong>"Generate Email"</strong></li>
+                </ol>
+
+                <p><strong>Email Recipients:</strong></p>
+                <ul>
+                    <li>✅ Decisiv Case Update system</li>
+                    <li>✅ Selected team members (location-specific emails)</li>
+                </ul>
+
+                <p><strong>Use cases:</strong> Requesting parts assistance, notifying management, coordinating team responses</p>
+
+                <h3>3. 🔧 Service Diag and Parts Update</h3>
+                <p><strong>Purpose:</strong> Comprehensive diagnostic report with parts information</p>
+                
+                <p><strong>How to use:</strong></p>
+                <ol>
+                    <li>Click the <strong>orange "Service Diag and Parts Update"</strong> button</li>
+                    <li>Enter the <strong>case number</strong> when prompted</li>
+                    <li>Email opens with <strong>structured template</strong> including diagnosis, parts list, and notes sections</li>
+                </ol>
+
+                <p><strong>Email Recipients:</strong></p>
+                <ul>
+                    <li>✅ Decisiv Case Update system</li>
+                    <li>✅ Back Parts Counter (automatically included, location-specific)</li>
+                </ul>
+
+                <p><strong>Use cases:</strong> Technical diagnostic reports, parts ordering requests, detailed service updates</p>
+
+                <h2>🛠️ Troubleshooting</h2>
+
+                <h3>Location Detection Issues</h3>
+                <p><strong>Problem:</strong> Location detection fails or selects wrong location</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Manually click the correct location button</li>
+                    <li>Check browser location permissions</li>
+                    <li>Refresh the page to retry detection</li>
+                </ul>
+
+                <h3>Email Client Issues</h3>
+                <p><strong>Problem:</strong> Email doesn't open or opens in wrong client</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Set default email client in Windows settings</li>
+                    <li>Copy the case number and create email manually</li>
+                    <li>Ensure Cases@replies.decisivapps.com is in your contacts</li>
+                </ul>
+
+                <h3>Case Number Validation</h3>
+                <p><strong>Problem:</strong> "Please enter a valid case number" error</p>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Use numbers only (no letters or special characters)</li>
+                    <li>Remove any spaces or dashes</li>
+                    <li>Example: Use "12345" not "Case-12345"</li>
+                </ul>
+
+                <h2>📱 Mobile Usage</h2>
+                <p>The tool is fully responsive and works on mobile devices:</p>
+                <ul>
+                    <li><strong>Touch-friendly</strong> location selection</li>
+                    <li><strong>Mobile-optimized</strong> button layout</li>
+                    <li><strong>Responsive design</strong> adapts to screen size</li>
+                    <li><strong>Same functionality</strong> as desktop version</li>
+                </ul>
+
+                <h2>🔒 Security & Privacy</h2>
+
+                <h3>Data Privacy</h3>
+                <ul>
+                    <li><strong>No case data stored</strong> locally or externally</li>
+                    <li><strong>Location detection</strong> only used for routing decisions</li>
+                    <li><strong>Geolocation cached</strong> for 5 minutes maximum</li>
+                    <li><strong>All data processing</strong> happens in your browser</li>
+                </ul>
+
+                <h3>Access Control</h3>
+                <ul>
+                    <li><strong>WKI Internal Use Only</strong> - proprietary application</li>
+                    <li><strong>Unauthorized access prohibited</strong></li>
+                    <li><strong>Professional use only</strong> for Decisiv case management</li>
+                </ul>
+
+                <h2>⚡ Quick Reference</h2>
+
+                <h3>Email Format Examples</h3>
+                <pre><code>TO: Cases@replies.decisivapps.com
+SUBJECT: 12345
+CC: WIC-BPC@WichitaKenworth.com (when applicable)</code></pre>
+
+                <h3>Supported Browsers</h3>
+                <ul>
+                    <li>✅ Chrome 90+</li>
+                    <li>✅ Firefox 88+</li>
+                    <li>✅ Edge 90+</li>
+                    <li>✅ Safari 14+</li>
+                    <li>✅ Mobile browsers</li>
+                </ul>
+
+                <h2>📞 Support</h2>
+                <p>For technical issues or questions:</p>
+                <ol>
+                    <li><strong>Check this user guide</strong> first</li>
+                    <li><strong>Contact WKI Decisiv Champion (Mike Agnew)</strong> for technical support</li>
+                    <li><strong>Contact Service Management</strong> for process questions</li>
+                </ol>
+
+                <hr style="margin: 30px 0; border: 1px solid rgba(255,255,255,0.1);">
+                <p style="text-align: center; font-style: italic; color: #64ffda;">
+                    <em>This tool was built specifically for WKI Service Department Excellence and streamlined case management workflows.</em>
+                </p>
+            `;
         }
     </script>
 </body>
